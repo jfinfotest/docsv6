@@ -4,6 +4,10 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
 
+// Leer el nombre del repositorio desde package.json
+const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf-8'));
+const repoName = packageJson.name;
+
 // Plugin para copiar temas de Prism durante el desarrollo y build
 const copyPrismThemes = () => {
   return {
@@ -89,21 +93,21 @@ export default defineConfig({
         theme_color: '#4F46E5',
         background_color: '#ffffff',
         display: 'standalone',
-        scope: '/docsv6/',
-        start_url: '/docsv6/',
+        scope: `/${repoName}/`,
+        start_url: `/${repoName}/`,
         icons: [
           {
-            src: '/docsv6/pwa-192x192.png',
+            src: `/${repoName}/pwa-192x192.png`,
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/docsv6/pwa-512x512.png',
+            src: `/${repoName}/pwa-512x512.png`,
             sizes: '512x512',
             type: 'image/png'
           },
           {
-            src: '/docsv6/pwa-512x512.png',
+            src: `/${repoName}/pwa-512x512.png`,
             sizes: '512x512',
             type: 'image/png',
             purpose: 'any maskable'
@@ -118,13 +122,13 @@ export default defineConfig({
   root: 'src',
   publicDir: '../public',
   // Configuración específica para GitHub Pages
-  base: '/docsv6/', // Cambia esto por el nombre de tu repositorio
+  base: `/${repoName}/`, // Nombre del repositorio obtenido automáticamente desde package.json
   define: {
     global: 'globalThis',
     // Inyectar configuración de GitHub Pages
     __GITHUB_PAGES_CONFIG__: JSON.stringify({
-      basePath: '/docsv6',
-      docsPath: '/docsv6/docs',
+      basePath: `/${repoName}`,
+      docsPath: `/${repoName}/docs`,
       isGitHubPages: true
     })
   },
