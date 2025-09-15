@@ -1,0 +1,74 @@
+{
+  "APP_CONFIG": {
+    "title": "Mi Documentación",
+    "subtitle": "Documentación Personalizada",
+    "icon": "/assets/logo.png"
+  },
+  "DOCS_CONFIG": {
+    "source": "local"
+  },
+  "THEME_CONFIG": {
+    "defaultTheme": "dark",
+    "defaultAppTheme": "blue",
+    "defaultFont": "Inter"
+  },
+  "HEADER_LINKS": [
+    {
+      "icon": "GitHub",
+      "label": "GitHub",
+      "url": "https://github.com/tu-usuario/tu-repo"
+    },
+    {
+      "icon": "Twitter",
+      "label": "Twitter",
+      "url": "https://twitter.com/tu-usuario"
+    }
+  ],
+  "FOOTER_CONFIG": {
+    "enabled": true,
+    "text": "Copyright © {year} Tu Empresa. Todos los derechos reservados."
+  },
+  "EDIT_PAGE_BUTTON_CONFIG": {
+    "enabled": false
+  },
+  "ANNOUNCEMENT_BANNER_CONFIG": {
+    "enabled": true,
+    "id": "welcome-banner",
+    "content": "🎉 ¡Bienvenido a nuestra nueva documentación!",
+    "link": {
+      "href": "/getting-started",
+      "text": "Comenzar"
+    }
+  },
+  "SIDEBAR_BUSINESS_INFO_CONFIG": {
+    "enabled": true,
+    "logo": "/assets/company-logo.svg",
+    "title": "Powered by Tu Empresa",
+    "link": "https://tu-empresa.com",
+    "footerText": "© {year} Tu Empresa Inc."
+  },
+  "I18N_CONFIG": {
+    "enabled": true,
+    "defaultLang": "es",
+    "languages": [
+      { "code": "en", "name": "English" },
+      { "code": "es", "name": "Español" }
+    ]
+  },
+  "VERSION_CONFIG": {
+    "enabled": true,
+    "defaultVersion": "v1.0",
+    "versions": ["v1.0"]
+  },
+  "MAINTENANCE_MODE_CONFIG": {
+    "enabled": false,
+    "message": "Estamos realizando mantenimiento programado. Volveremos pronto. ¡Gracias por tu paciencia!"
+  },
+  "GITHUB_CONFIG": {
+    "owner": "tu-usuario-github",
+    "repo": "tu-repositorio",
+    "branch": "main",
+    "docsPath": "docs",
+    "token": ""
+  }
+}

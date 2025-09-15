@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7C3AED;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="url(#gradient)" stroke="#ffffff" stroke-width="8"/>
+  
+  <!-- Document icon -->
+  <g transform="translate(156, 120)">
+    <!-- Main document -->
+    <rect x="0" y="0" width="140" height="180" rx="8" ry="8" fill="#ffffff" opacity="0.95"/>
+    
+    <!-- Folded corner -->
+    <path d="M 115 0 L 140 0 L 140 25 Z" fill="#e5e7eb"/>
+    <path d="M 115 0 L 140 25 L 115 25 Z" fill="#f3f4f6"/>
+    
+    <!-- Text lines -->
+    <rect x="15" y="40" width="90" height="4" rx="2" fill="#6b7280"/>
+    <rect x="15" y="55" width="110" height="4" rx="2" fill="#6b7280"/>
+    <rect x="15" y="70" width="80" height="4" rx="2" fill="#6b7280"/>
+    <rect x="15" y="85" width="100" height="4" rx="2" fill="#6b7280"/>
+    
+    <!-- Code block representation -->
+    <rect x="15" y="110" width="110" height="50" rx="4" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+    <rect x="20" y="118" width="20" height="3" rx="1" fill="#3b82f6"/>
+    <rect x="45" y="118" width="30" height="3" rx="1" fill="#10b981"/>
+    <rect x="20" y="128" width="40" height="3" rx="1" fill="#f59e0b"/>
+    <rect x="20" y="138" width="25" height="3" rx="1" fill="#ef4444"/>
+    <rect x="50" y="138" width="35" height="3" rx="1" fill="#8b5cf6"/>
+    <rect x="20" y="148" width="60" height="3" rx="1" fill="#6b7280"/>
+  </g>
+  
+  <!-- Floating elements for dynamic feel -->
+  <circle cx="380" cy="180" r="12" fill="#ffffff" opacity="0.8"/>
+  <circle cx="420" cy="220" r="8" fill="#ffffff" opacity="0.6"/>
+  <circle cx="140" cy="160" r="10" fill="#ffffff" opacity="0.7"/>
+</svg>
