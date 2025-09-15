@@ -5,8 +5,6 @@ position: 1
 
 # Configuración Básica
 
-
-
 El archivo `constants.ts` es el centro de control para la personalización de tu sitio. Aquí puedes definir la identidad del sitio, la apariencia y habilitar o deshabilitar componentes específicos de la interfaz.
 
 ## Configuración Principal (`APP_CONFIG`)
