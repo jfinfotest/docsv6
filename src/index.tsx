@@ -20,6 +20,9 @@ import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-java';
 import 'prismjs/components/prism-csharp';
 
+// Initialize PrismJS with custom language support
+import './utils/prismInit';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';

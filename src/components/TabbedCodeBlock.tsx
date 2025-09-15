@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext';
 import { CopyIcon, CheckIcon, ExpandIcon, LineNumbersIcon, CloseIcon, FileCodeIcon } from './Icons';
 import { useI18n } from '../context/I18nContext';
 import Tooltip from './Tooltip';
+import { prismLanguageLoader } from '../services/prismLanguageLoader';
 
 // --- Helper Functions ---
 
@@ -44,13 +45,23 @@ const parseTabContent = (content: string): Tab[] => {
 
 // --- Language Loading Logic ---
 const loadedLanguages = new Set(['javascript', 'js', 'css', 'html', 'markup', 'svg', 'xml', 'clike']);
-const langAliasMap: { [key: string]: string } = {
-    py: 'python', sh: 'bash', shell: 'bash', js: 'javascript', ts: 'typescript',
-    html: 'markup', xml: 'markup', svg: 'markup', md: 'markdown', yml: 'yaml',
+
+// Language alias mapping for PrismJS (includes built-in aliases)
+const getLanguageAliasMap = (): Record<string, string> => {
+    const builtInAliases = {
+        py: 'python', sh: 'bash', shell: 'bash', js: 'javascript', ts: 'typescript',
+        html: 'markup', xml: 'markup', svg: 'markup', md: 'markdown', yml: 'yaml',
+    };
+    
+    // Merge with custom language aliases
+    const customAliases = prismLanguageLoader.getLanguageAliases();
+    return { ...builtInAliases, ...customAliases };
 };
+
 const languageLoadPromises: { [key: string]: Promise<void> } = {};
 
-const loadPrismLanguage = (lang: string): Promise<void> => {
+const loadPrismLanguage = async (lang: string): Promise<void> => {
+    const langAliasMap = getLanguageAliasMap();
     const canonicalLang = langAliasMap[lang] || lang;
     
     if (!canonicalLang) return Promise.resolve();
@@ -65,6 +76,19 @@ const loadPrismLanguage = (lang: string): Promise<void> => {
         return Promise.resolve();
     }
     
+    // First, try to load from custom languages
+    if (prismLanguageLoader.isLanguageAvailable(canonicalLang)) {
+        try {
+            await prismLanguageLoader.loadLanguage(canonicalLang);
+            loadedLanguages.add(canonicalLang);
+            if (lang !== canonicalLang) loadedLanguages.add(lang);
+            return Promise.resolve();
+        } catch (error) {
+            console.warn(`Failed to load custom language ${canonicalLang}, trying CDN fallback`);
+        }
+    }
+    
+    // Fallback to CDN for built-in languages
     const promise = new Promise<void>((resolve, reject) => {
         const script = document.createElement('script');
         script.src = `https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-${canonicalLang}.min.js`;
@@ -89,6 +113,7 @@ const loadPrismLanguage = (lang: string): Promise<void> => {
 
 
 const highlightCode = (code: string, lang: string): string => {
+    const langAliasMap = getLanguageAliasMap();
     const canonicalLang = langAliasMap[lang] || lang;
     if (typeof window !== 'undefined' && window.Prism && window.Prism.languages[canonicalLang]) {
         return window.Prism.highlight(code, window.Prism.languages[canonicalLang], canonicalLang);
@@ -204,7 +229,7 @@ const TabbedCodeBlock: React.FC<{ content: string }> = ({ content }) => {
         const activeLang = tabs[activeTabIndex]?.lang;
         if (!activeLang) return;
 
-        const canonicalLang = langAliasMap[activeLang] || activeLang;
+        const canonicalLang = getLanguageAliasMap()[activeLang] || activeLang;
         if (loadedLanguages.has(canonicalLang) || (window.Prism && window.Prism.languages[canonicalLang])) {
             return;
         }
