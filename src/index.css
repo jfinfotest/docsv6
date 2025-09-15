@@ -59,3 +59,19 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Prevent overscroll behavior and global scroll */
+html, body {
+  overscroll-behavior: none;
+  overflow: hidden;
+  height: 100%;
+}
+
+#root {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-scroll-container {
+  overscroll-behavior: contain;
+}

@@ -28,13 +28,15 @@ npm run preview:github
 
 ### Paso 1: Configurar el repositorio
 
-1. **Actualizar la base URL**: Edita `vite.config.github.ts` y cambia:
+1. **Configuración automática de la base URL**: El proyecto está configurado para obtener automáticamente el nombre del repositorio desde `package.json`. La configuración en `vite.config.github.ts` es:
    ```typescript
-   base: '/docsv1/', // Cambia por el nombre de tu repositorio
+   base: `/${repoName}/`, // Nombre del repositorio obtenido automáticamente desde package.json
    ```
-   Por ejemplo, si tu repositorio se llama `mi-documentacion`:
-   ```typescript
-   base: '/mi-documentacion/',
+   Si necesitas cambiar el nombre base, actualiza el campo `name` en `package.json`:
+   ```json
+   {
+     "name": "tu-repositorio-nombre"
+   }
    ```
 
 ### Paso 2: Habilitar GitHub Pages
@@ -59,7 +61,7 @@ npm run preview:github
 2. Debería aparecer automáticamente un environment llamado "github-pages"
 3. Si no existe, créalo manualmente
 
-### Paso 3: Estructura de documentos
+### Paso 5: Estructura de documentos
 
 Asegúrate de que tus documentos estén en la carpeta `docs/` con la siguiente estructura:
 
@@ -82,30 +84,39 @@ docs/
 
 ### Optimizaciones incluidas:
 - ✅ **Code splitting**: Separación automática de vendors, mermaid y markdown
-- ✅ **Minificación avanzada**: Usando Terser con eliminación de console.log
+- ✅ **Minificación avanzada**: Usando Terser con eliminación de console.log y debugger
 - ✅ **Sin sourcemaps**: Para reducir el tamaño del bundle
 - ✅ **Archivo .nojekyll**: Para evitar procesamiento de Jekyll
-- ✅ **Base URL configurada**: Para funcionar correctamente en subdirectorios
+- ✅ **Base URL configurada**: Obtenida automáticamente desde package.json
+- ✅ **PWA Support**: Configuración automática para Progressive Web App
+- ✅ **Prism themes**: Copia automática de temas de sintaxis durante el build
+- ✅ **Asset optimization**: Gestión optimizada de archivos estáticos
 
 ### Tamaños de bundle optimizados:
-- Vendor (React): ~140KB
-- Markdown: ~442KB
-- Mermaid: ~530KB
-- Main: ~1.1MB
+- **Vendor** (React, React-DOM): Separado automáticamente
+- **Markdown** (react-markdown, remark-gfm, rehype-katex, remark-math): Separado automáticamente
+- **Mermaid**: Separado automáticamente para carga bajo demanda
+- **Main**: Código principal de la aplicación
 
 ## Comandos útiles
 
 ```bash
-# Desarrollo local
+# Desarrollo local (incluye actualización automática del manifest)
 npm run dev
 
-# Build para GitHub Pages
+# Build para GitHub Pages (incluye actualización automática del manifest)
 npm run build:github
+
+# Build estándar (incluye actualización automática del manifest)
+npm run build
 
 # Preview del build de GitHub Pages
 npm run preview:github
 
-# Actualizar manifest de archivos
+# Preview del build estándar
+npm run preview
+
+# Actualizar manifest de archivos manualmente
 npm run update-file-manifest
 ```
 
@@ -139,7 +150,9 @@ npm run update-file-manifest
 
 ### Errores de build
 1. Verifica que todas las dependencias estén instaladas: `npm install`
-2. Limpia la caché: `rm -rf node_modules/.vite`
+2. Limpia la caché: `rm -rf node_modules/.vite` (Linux/Mac) o `rmdir /s node_modules\.vite` (Windows)
+3. Regenera el manifest de archivos: `npm run update-file-manifest`
+4. Verifica que el script predev se ejecute correctamente antes del build
 
 ## Dominio personalizado (opcional)
 

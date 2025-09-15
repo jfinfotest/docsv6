@@ -46,7 +46,7 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ items, activeId }) => {
     return (
         <div className="sticky top-8">
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-3">{t('onThisPage')}</h3>
-            <div className="max-h-[calc(100vh-8rem)] overflow-y-auto pr-2">
+            <div className="max-h-[calc(100vh-12rem)] overflow-y-auto pr-2">
                 <nav>
                     <ul className="space-y-1 border-l border-gray-200 dark:border-gray-700">
                         {items.map(item => (

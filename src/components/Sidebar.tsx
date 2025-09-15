@@ -6,7 +6,7 @@ import { ChevronDownIcon, DocumentIcon, FolderIcon, CloseIcon } from './Icons';
 import { APP_CONFIG, SIDEBAR_BUSINESS_INFO_CONFIG } from '../constants';
 import AppIcon from './AppIcon';
 import SidebarLogo from './SidebarLogo';
-import Tooltip from './Tooltip';
+
 import { useI18n } from '../context/I18nContext';
 
 interface SidebarProps {
@@ -27,15 +27,13 @@ const NavLink: React.FC<NavLinkProps> = ({ path, title, isSubItem = false }) => 
     const isActive = location.pathname === to || (location.pathname === '/' && path === 'index.md');
 
     return (
-        <Tooltip content={`${t('goToPage')}: ${title}`} position="right">
-            <RouterNavLink
-                to={to}
-                className={`flex items-start p-2 text-sm font-normal rounded-lg transition-colors duration-200 ${isSubItem ? 'pl-3' : ''} ${isActive ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
-            >
-                <DocumentIcon className="w-5 h-5 flex-shrink-0 mt-px" />
-                <span className={`ml-3`}>{title}</span>
-            </RouterNavLink>
-        </Tooltip>
+        <RouterNavLink
+            to={to}
+            className={`flex items-start p-2 text-sm font-normal rounded-lg transition-colors duration-200 ${isSubItem ? 'pl-3' : ''} ${isActive ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300' : 'text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+        >
+            <DocumentIcon className="w-5 h-5 flex-shrink-0 mt-px" />
+            <span className={`ml-3`}>{title}</span>
+        </RouterNavLink>
     );
 };
 
@@ -55,21 +53,19 @@ const CollapsibleSection: React.FC<{ section: NavSection }> = ({ section }) => {
 
     return (
         <li>
-            <Tooltip content={isCollapsed ? `${t('expandSection')}: ${section.title}` : `${t('collapseSection')}: ${section.title}`} position="right">
-                <button
-                    type="button"
-                    className={`flex items-start w-full p-2 text-sm rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${
-                        containsActiveLink 
-                            ? 'font-semibold text-primary-600 dark:text-primary-300' 
-                            : 'font-medium text-primary-700 dark:text-primary-400'
-                    }`}
-                    onClick={() => setCollapsed(!isCollapsed)}
-                >
-                    <FolderIcon className="w-5 h-5 flex-shrink-0 mt-px" />
-                    <span className="flex-1 ml-3 text-left whitespace-normal break-words">{section.title}</span>
-                    <ChevronDownIcon isRotated={!isCollapsed} className="w-5 h-5 flex-shrink-0 mt-px" />
-                </button>
-            </Tooltip>
+            <button
+                type="button"
+                className={`flex items-start w-full p-2 text-sm rounded-lg transition-colors duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${
+                    containsActiveLink 
+                        ? 'font-semibold text-primary-600 dark:text-primary-300' 
+                        : 'font-medium text-primary-700 dark:text-primary-400'
+                }`}
+                onClick={() => setCollapsed(!isCollapsed)}
+            >
+                <FolderIcon className="w-5 h-5 flex-shrink-0 mt-px" />
+                <span className="flex-1 ml-3 text-left whitespace-normal break-words">{section.title}</span>
+                <ChevronDownIcon isRotated={!isCollapsed} className="w-5 h-5 flex-shrink-0 mt-px" />
+            </button>
             <ul className={`py-2 space-y-2 ${isCollapsed ? 'hidden' : 'block'}`}>
                 {section.children.map((child, index) => (
                     <li key={index}>
@@ -188,11 +184,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, setIsOpen }) => {
                             )}
                         </div>
                     </a>
-                    <Tooltip content={t('closeMenu')} position="bottom">
-                        <button onClick={() => setIsOpen(false)} className="md:hidden text-primary-200 hover:text-white">
-                            <CloseIcon className="w-6 h-6" />
-                        </button>
-                    </Tooltip>
+                    <button onClick={() => setIsOpen(false)} className="md:hidden text-primary-200 hover:text-white">
+                        <CloseIcon className="w-6 h-6" />
+                    </button>
                 </div>
 
                 {/* Main Content Area: Flex container to push footer down */}

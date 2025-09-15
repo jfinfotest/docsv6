@@ -113,7 +113,7 @@ const App: React.FC = () => {
                 <div className="flex flex-1 overflow-hidden">
                     {!isHomePage && <Sidebar isOpen={isSidebarOpen} setIsOpen={setSidebarOpen} />}
 
-                    <div ref={mainScrollRef} className="flex-1 overflow-y-auto pb-16">
+                    <div ref={mainScrollRef} className="flex-1 overflow-y-auto pb-16 main-scroll-container">
                         <main className="flex-grow">
                             <div className="container mx-auto px-6 py-8">
                                 <ErrorBoundary key={location.pathname}>
