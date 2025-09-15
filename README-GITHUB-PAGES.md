@@ -140,9 +140,45 @@ npm run update-file-manifest
    - Espera unos minutos después de habilitar Pages
    - Vuelve a ejecutar el workflow desde la pestaña **Actions**
 
+### Errores 404 en assets (archivos JS, CSS, etc.)
+**Causa**: El nombre en `package.json` no coincide con el nombre real del repositorio en GitHub
+
+**Síntomas**:
+- Errores como: `GET https://usuario.github.io/nombre-incorrecto/assets/main-xxx.js 404 (Not Found)`
+- El sitio intenta cargar recursos desde una URL incorrecta
+
+**Solución**:
+1. **Verificar el nombre del repositorio**:
+   ```bash
+   git remote get-url origin
+   # Ejemplo: https://github.com/usuario/nombre-real-repo.git
+   ```
+
+2. **Actualizar package.json**:
+   - Cambia el campo `name` en `package.json` para que coincida exactamente con el nombre del repositorio
+   ```json
+   {
+     "name": "nombre-real-repo"
+   }
+   ```
+
+3. **Hacer commit y push**:
+   ```bash
+   git add package.json
+   git commit -m "Fix GitHub Pages deployment: update package name to match repository name"
+   git push origin main
+   ```
+
+4. **Forzar rebuild si es necesario**:
+   ```bash
+   git commit --allow-empty -m "Force GitHub Pages rebuild"
+   git push origin main
+   ```
+
 ### El sitio no carga correctamente
 1. Verifica que la `base` URL en `vite.config.github.ts` coincida con el nombre de tu repositorio
-2. Asegúrate de que GitHub Pages esté configurado para usar GitHub Actions
+2. Asegúrate de que el nombre en `package.json` sea exactamente igual al nombre del repositorio
+3. Asegúrate de que GitHub Pages esté configurado para usar GitHub Actions
 
 ### Los documentos no se cargan
 1. Verifica que la carpeta `docs/` contenga el `file-manifest.json`
