@@ -5,6 +5,7 @@ position: 1
 
 # Basic Configuration
 
+
 The `constants.ts` file is the control center for your site's customization. Here you can define the site's identity, appearance, and enable or disable specific UI components.
 
 ## Main Configuration (`APP_CONFIG`)
