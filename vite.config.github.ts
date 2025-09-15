@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import fs from 'fs';
 
-// Plugin para copiar temas de Prism durante el desarrollo
+// Plugin para copiar temas de Prism durante el desarrollo y build
 const copyPrismThemes = () => {
   return {
     name: 'copy-prism-themes',
@@ -30,6 +30,47 @@ const copyPrismThemes = () => {
           next();
         }
       });
+    },
+    generateBundle() {
+      // Copiar archivos de prism-themes al build
+      const prismThemesSource = path.join(__dirname, 'node_modules/prism-themes/themes');
+      const prismCoreSource = path.join(__dirname, 'node_modules/prismjs/themes');
+      const distPrismThemes = path.join(__dirname, 'dist/prism-themes');
+      const distPrismCore = path.join(__dirname, 'dist/prism-core');
+      
+      // Crear directorios si no existen
+      if (!fs.existsSync(distPrismThemes)) {
+        fs.mkdirSync(distPrismThemes, { recursive: true });
+      }
+      if (!fs.existsSync(distPrismCore)) {
+        fs.mkdirSync(distPrismCore, { recursive: true });
+      }
+      
+      // Copiar archivos CSS de prism-themes
+      if (fs.existsSync(prismThemesSource)) {
+        const files = fs.readdirSync(prismThemesSource);
+        files.forEach(file => {
+          if (file.endsWith('.css')) {
+            fs.copyFileSync(
+              path.join(prismThemesSource, file),
+              path.join(distPrismThemes, file)
+            );
+          }
+        });
+      }
+      
+      // Copiar archivos CSS de prismjs core
+      if (fs.existsSync(prismCoreSource)) {
+        const files = fs.readdirSync(prismCoreSource);
+        files.forEach(file => {
+          if (file.endsWith('.css')) {
+            fs.copyFileSync(
+              path.join(prismCoreSource, file),
+              path.join(distPrismCore, file)
+            );
+          }
+        });
+      }
     }
   };
 };
@@ -48,8 +89,8 @@ export default defineConfig({
         theme_color: '#4F46E5',
         background_color: '#ffffff',
         display: 'standalone',
-        scope: '/docsv5/',
-        start_url: '/docsv5/',
+        scope: '/docsv6/',
+        start_url: '/docsv6/',
         icons: [
           {
             src: 'pwa-192x192.png',
@@ -77,13 +118,13 @@ export default defineConfig({
   root: 'src',
   publicDir: '../public',
   // Configuración específica para GitHub Pages
-  base: '/docsv5/', // Cambia esto por el nombre de tu repositorio
+  base: '/docsv6/', // Cambia esto por el nombre de tu repositorio
   define: {
     global: 'globalThis',
     // Inyectar configuración de GitHub Pages
     __GITHUB_PAGES_CONFIG__: JSON.stringify({
-      basePath: '/docsv5',
-      docsPath: '/docsv5/docs',
+      basePath: '/docsv6',
+      docsPath: '/docsv6/docs',
       isGitHubPages: true
     })
   },
